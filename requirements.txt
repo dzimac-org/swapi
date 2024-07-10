@@ -1,0 +1,5 @@
+Django==4.2
+psycopg2-binary==2.9.6
+django-environ==0.11.2
+petl==1.7.15
+black==24.4.2
