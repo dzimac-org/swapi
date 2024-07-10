@@ -8,6 +8,23 @@
         <button id="fetch-btn" type="button" class="btn btn-success">The one and only button!</button>
     </div>
 
+    <script>
+        $(document).ready(function () {
+            $("#fetch-btn").click(function () {
+                $.ajax({
+                    url: 'http://localhost:8080/fetch/',
+                    type: 'POST',
+                    success: function (data) {
+                        console.log(data);
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
 
 
     <div>
