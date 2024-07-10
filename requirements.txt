@@ -5,3 +5,4 @@ petl==1.7.15
 black==24.4.2
 djangorestframework==3.15.2
 django-cors-headers==4.4.0
+freezegun==1.5.1

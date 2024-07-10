@@ -1,4 +1,4 @@
-.PHONY: build up down bash
+.PHONY: build up down bash test
 COMPOSE=docker-compose $(COMPOSE_OPTS)
 USER_ID := $(shell id -u)
 GROUP_ID := $(shell id -g)
@@ -14,3 +14,6 @@ down:
 
 bash:
 	$(COMPOSE) exec django bash
+
+test:
+	$(COMPOSE) exec django python manage.py test --parallel
