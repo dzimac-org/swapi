@@ -16,4 +16,4 @@ bash:
 	$(COMPOSE) exec django bash
 
 test:
-	$(COMPOSE) exec django python manage.py test --parallel --noinput
+	$(COMPOSE) exec django python manage.py test --parallel --noinput --failfast
