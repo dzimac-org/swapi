@@ -2,6 +2,11 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from data_collections.models import Collection
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from etl.swapi.extract.client import SWAPIClient
+from etl.swapi.extract.exceptions import SWAPIClientError
+
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -19,4 +24,13 @@ class CollectionDetailView(TemplateView):
 
 @api_view(["POST"])
 def fetch(request):
-    return HttpResponse("xyz")
+    try:
+        api_client = SWAPIClient()
+        persons_data = []
+        planets_data = []
+        # move elsewhere
+        for persons, planets in api_client.get_sw_data():
+            yield persons, planets
+
+    except SWAPIClientError:
+        return Response("Couldn't fetch the data", status=status.HTTP_502_BAD_GATEWAY)

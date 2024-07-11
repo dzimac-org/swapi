@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "data_collections",
+    "etl",
 ]
 
 MIDDLEWARE = [
