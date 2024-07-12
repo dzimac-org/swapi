@@ -24,6 +24,7 @@ class CollectionDetailView(TemplateView):
 
 @api_view(["POST"])
 def fetch(request):
+    # move below to ETL wrapper
     try:
         api_client = SWAPIClient()
         persons_data = []
