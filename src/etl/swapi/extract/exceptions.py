@@ -2,7 +2,7 @@ class SWAPIClientError(Exception):
     pass
 
 
-class SWAPIConnectionError(Exception):
+class SWAPIConnectionError(SWAPIClientError):
     pass
 
 

@@ -5,7 +5,7 @@
 
     <div class="col-sm-8">
         <h4 class="d-inline-block">Collections</h4>
-        <button id="fetch-btn" type="button" class="btn btn-success">The one and only button!</button>
+        <button id="fetch-btn" type="button" class="btn btn-success">Fetch</button>
     </div>
 
     <script>
@@ -15,7 +15,6 @@
                     url: 'http://localhost:8080/fetch/',
                     type: 'POST',
                     success: function (data) {
-                        console.log(data);
                         location.reload();
                     },
                     error: function (error) {
@@ -26,13 +25,12 @@
         });
     </script>
 
-
     <div>
         <table class="table table-bordered mt-5">
           <tbody>
-          {% for collection in collections %}
+          {% for collection in collection_list %}
             <tr>
-              <td><a href="{{ collection.get_absolute_url }}">{{ collection.created }}</a></td>
+              <td><a href="{{ collection.file.name }}">{{ collection.created }}</a></td>
             </tr>
           {% endfor %}
           </tbody>

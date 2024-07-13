@@ -1,16 +1,15 @@
-import time
-from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from data_collections.models import Collection
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 from etl.swapi.etl import SWAPIETL
-from etl.swapi.extract.client import SWAPIClient
 from etl.swapi.extract.exceptions import SWAPIClientError
-from etl.swapi.load.loader import SWAPILoader
-from etl.swapi.transform.transform import SWAPITransformTable
+
+
+class CollectionListView(ListView):
+    model = Collection
 
 
 class IndexView(TemplateView):
@@ -23,7 +22,7 @@ class IndexView(TemplateView):
 
 
 class CollectionDetailView(TemplateView):
-    template_name = "collection_detail.html"
+    template_name = "data_collections/collection_detail.html"
 
 
 @api_view(["POST"])
