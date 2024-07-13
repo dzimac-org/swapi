@@ -1,6 +1,4 @@
 import petl
-from django.core.files.base import ContentFile
-from petl import MemorySource
 
 from data_collections.models import Collection, SWPerson
 
@@ -16,8 +14,7 @@ class SWAPILoader:
         file_name = f"collection_{self.ts}.csv"
 
         if self.create:
-            memory_source = MemorySource()
-            petl.tocsv(self.table, memory_source)
+            petl.tocsv(self.table, file_name)
             self.collection = Collection()
             self.collection.file.name = file_name
             self.collection.save()

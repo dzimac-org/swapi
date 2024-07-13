@@ -21,13 +21,12 @@ class ETL(ABC):
 
     @abstractmethod
     def after_etl(self):
-        """After ETL """
+        """After ETL"""
 
     def process(self):
         """General idea"""
         self.before_etl()
         for data in self.extract():
-            transformed_data =self.transform(data)
+            transformed_data = self.transform(data)
             self.load(transformed_data)
         self.after_etl()
-

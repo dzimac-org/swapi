@@ -6,6 +6,7 @@ from etl.swapi.transform.transform import SWAPITransformTable
 from time import time
 from typing import List, Union
 
+
 class SWAPIETL(ETL):
 
     api_client: SWAPIClient
@@ -29,7 +30,9 @@ class SWAPIETL(ETL):
         return transform_cls.transform()
 
     def load(self, transformed_data):
-        loader = SWAPILoader(transformed_data, self.ts, self.create_csv, self.collection)
+        loader = SWAPILoader(
+            transformed_data, self.ts, self.create_csv, self.collection
+        )
         loader.load_data()
         self.collection = loader.collection
         self.create_csv = False

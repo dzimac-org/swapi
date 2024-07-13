@@ -29,19 +29,14 @@ class SWAPITransformTable:
     def drop_not_needed_columns(self):
         self.persons_table = self.persons_table.cutout(*self.columns_to_drop)
 
-    def resolve_planet_hyperlink_into_name(self):
+    def convert_homeworld_to_name(self):
         self.persons_table = petl.convert(
-            self.persons_table,
-            "homeworld",
-            lambda x: self.planets_map.get(x, "")
+            self.persons_table, "homeworld", lambda x: self.planets_map.get(x, "")
         )
-
-        print("resolve")
-        print(petl.header(self.persons_table))
 
     def transform(self):
         self.parse_edited_data()
         self.rename_edited_column()
         self.drop_not_needed_columns()
-        self.resolve_planet_hyperlink_into_name()
+        self.convert_homeworld_to_name()
         return self.persons_table

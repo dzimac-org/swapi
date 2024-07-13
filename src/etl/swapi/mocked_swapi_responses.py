@@ -357,3 +357,11 @@ planets_mocked_data = [
         "url": "https://swapi.dev/api/planets/20/",
     },
 ]
+
+planets_mapping = {
+    "https://swapi.dev/api/planets/1/": "Tatooine",
+    "https://swapi.dev/api/planets/2/": "Alderaan",
+    "https://swapi.dev/api/planets/7/": "Endor",
+    "https://swapi.dev/api/planets/8/": "Naboo",
+    "https://swapi.dev/api/planets/20/": "Stewjon",
+}
