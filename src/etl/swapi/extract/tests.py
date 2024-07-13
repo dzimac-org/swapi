@@ -23,7 +23,7 @@ class TestSWAPIClient(TestCase):
         mock_response.json.return_value = response_data
         mock_get.side_effect = yield from [mock_response]
 
-        result = self.swapi_client.get_all_data("test")
+        result = self.swapi_client.get_data("test")
         self.assertEqual(result, response_data["results"])
 
     @patch("etl.swapi.extract.client.requests.get")
@@ -33,13 +33,13 @@ class TestSWAPIClient(TestCase):
         mock_get.side_effect = yield from [mock_response]
 
         with self.assertRaises(SWAPIResponseStatusError):
-            self.swapi_client.get_all_data("test")
+            self.swapi_client.get_data("test")
 
     @patch("etl.swapi.extract.client.requests.get")
     def test_make_request_connection_error(self, mock_get):
         mock_get.side_effect = yield from [requests.exceptions.RequestException("Request error")]
         with self.assertRaises(SWAPIConnectionError):
-            self.swapi_client.get_all_data("test")
+            self.swapi_client.get_data("test")
 
     @patch("etl.swapi.extract.client.requests.get")
     def test_make_request_json_error(self, mock_get):
@@ -48,7 +48,7 @@ class TestSWAPIClient(TestCase):
         mock_response.json.side_effect = ValueError("JSON parsing error")
         mock_get.side_effect = yield from [mock_response]
         with self.assertRaises(SWAPIResponseDataError):
-            self.swapi_client.get_all_data("test")
+            self.swapi_client.get_data("test")
 
     @patch("requests.get")
     def test_get_all_data(self, mocked_get):
@@ -68,7 +68,7 @@ class TestSWAPIClient(TestCase):
 
         mocked_get.side_effect = [mock_response1, mock_response2]
         result = []
-        for response in self.swapi_client.get_all_data("http://test.com"):
+        for response in self.swapi_client.get_data("http://test.com"):
             result.extend(response)
         self.assertEqual(result, [{"name": "Luke Skywalker"}, {"name": "Darth Vader"}])
         self.assertEqual(mocked_get.call_count, 2)

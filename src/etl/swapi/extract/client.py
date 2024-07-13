@@ -49,17 +49,18 @@ class SWAPIClient(APIClient):
 
         return json_data
 
-    def get_all_data(self, url) -> list[Dict[str, any]]:
+    def get_data(self, url) -> list[Dict[str, any]]:
         while url:
             response = self.make_request("get", url=url)
             json_data = self.handle_response(response)
             yield json_data["results"]
             url = json_data["next"]
 
-    def get_sw_data(self):
-        persons_data, planets_data = self.get_all_data(
-            self.api_url + "people/"
-        ), self.get_all_data(self.api_url + "planets/")
-        yield persons_data, planets_data
+    def get_planets_mapping(self) -> Dict[str, str]:
+        planets_map = {}
+        for planets in self.get_data(self.api_url + "planets/"):
+            planets_map.update({i["url"]: i["name"] for i in planets})
+        return planets_map
 
-
+    def get_people_data(self):
+        yield from self.get_data(self.api_url + "people/")
