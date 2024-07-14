@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock title %}
+{% block content %}
+
+    <div class="col-sm-8">
+        <h4 class="d-inline-block">Collections</h4>
+        <button id="fetch-btn" type="button" class="btn btn-success">Fetch</button>
+    </div>
+
+    <script>
+        $().ready(function () {
+            $("#fetch-btn").click(function () {
+                $.ajax({
+                    url: 'http://localhost:8080/fetch/',
+                    type: 'POST',
+                    success: function (data) {
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <div>
+        <table class="table table-bordered mt-5">
+          <tbody>
+          {% for collection in collection_list %}
+            <tr>
+              <td><a href="{{ collection.get_absolute_url }}">{{ collection.created }}</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

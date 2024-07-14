@@ -1,0 +1,42 @@
+version: "3.8"
+
+x-base: &backend-base
+    build: .
+    env_file:
+      - src/config/.env.dev
+    depends_on:
+      - db
+    volumes:
+      - ./src:/opt/src
+
+services:
+  db:
+    container_name: swapi-tt-db
+    env_file:
+      - src/config/.env.dev
+    image: postgres:12.5-alpine
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-db}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-django_db}
+      POSTGRES_USER: ${POSTGRES_USER:-django_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-django_password}
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  django:
+    <<: *backend-base
+    entrypoint: ['sh', 'entrypoints/app.sh']
+    container_name: swapi-tt-django
+    ports:
+      - "8080:8080"
+    image: swapi-tt-django
+    restart: unless-stopped
+
+  migrate:
+    <<: *backend-base
+    entrypoint: ['sh', 'entrypoints/migrate.sh']
+    container_name: swapi-tt-migrate
+    image: swapi-tt-migrate
+    restart: 'no'
