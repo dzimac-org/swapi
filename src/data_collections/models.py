@@ -10,8 +10,10 @@ class Collection(models.Model):
         ordering = ["-created"]
 
     def get_absolute_url(self):
-        return reverse("collections-detail", kwargs={"pk": self.pk})
+        return reverse("collections-persons", kwargs={"pk": self.pk})
 
+    def get_aggregate_url(self):
+        return reverse("collections-aggregate", kwargs={"pk": self.pk})
 
 class SWPerson(models.Model):
     collection = models.ForeignKey(

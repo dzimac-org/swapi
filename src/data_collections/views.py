@@ -1,6 +1,10 @@
 from functools import cached_property
+
+from django_filters.views import FilterView
 from rest_framework.generics import get_object_or_404
 from django.views.generic import ListView
+
+from data_collections.filters import SWPersonFilterSet
 from data_collections.models import Collection, SWPerson
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,6 +34,27 @@ class CollectionPersonsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["collection_file_name"] = self.collection.file.name
+        context["collection_aggregate_url"] = self.collection.get_aggregate_url()
+        return context
+
+class CollectionAggregateView(FilterView):
+    model = SWPerson
+    filterset_class = SWPersonFilterSet
+    template_name = "data_collections/collection_aggregate.html"
+    context_object_name = "persons"
+
+    @cached_property
+    def collection(self):
+        return get_object_or_404(Collection, pk=self.kwargs.get("pk"))
+
+    def get_queryset(self):
+        if not self.request.GET:
+            return SWPerson.objects.none()
+        return SWPerson.objects.filter(collection_id=self.kwargs.get("pk"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["collection_persons_url"] = self.collection.get_absolute_url()
         return context
 
 

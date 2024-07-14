@@ -30,8 +30,7 @@
           <tbody>
           {% for collection in collection_list %}
             <tr>
-              <td><a href="{% url 'collections-persons' pk=collection.id %}
-">{{ collection.created }}</a></td>
+              <td><a href="{{ collection.get_absolute_url }}">{{ collection.created }}</a></td>
             </tr>
           {% endfor %}
           </tbody>

@@ -24,7 +24,7 @@ class ETL(ABC):
         """After ETL"""
 
     def process(self):
-        """General idea"""
+        """Run ETL process"""
         self.before_etl()
         for data in self.extract():
             transformed_data = self.transform(data)

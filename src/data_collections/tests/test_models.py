@@ -33,3 +33,17 @@ class CollectionModelTests(TestCase):
         self.assertListEqual(
             [collections[0], collections[1]], [collection_2, self.collection]
         )
+
+    def test_get_absolute_url(self):
+        url = self.collection.get_absolute_url()
+
+        self.assertEqual(
+            url, reverse("collections-persons", kwargs={"pk": self.collection.pk})
+        )
+
+    def test_get_aggregate_url(self):
+        url = self.collection.get_aggregate_url()
+
+        self.assertEqual(
+            url, reverse("collections-aggregate", kwargs={"pk": self.collection.pk})
+        )
