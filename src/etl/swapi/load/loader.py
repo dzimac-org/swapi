@@ -1,3 +1,5 @@
+from os.path import join as path_join
+
 import petl
 from django.conf import settings
 
@@ -12,17 +14,17 @@ class SWAPILoader:
         self.collection = collection
 
     def create_collection(self):
-        file_name = f"{settings.MEDIA_ROOT}/collection_{self.ts}.csv"
-
+        file_name = f"collection_{self.ts}.csv"
+        file_path = path_join(settings.MEDIA_ROOT, file_name)
         if self.create:
-            petl.tocsv(self.table, file_name)
+            petl.tocsv(self.table, file_path)
             self.collection = Collection()
             self.collection.file.name = file_name
             self.collection.save()
 
             self.create = False
         else:
-            petl.appendcsv(self.table, file_name)
+            petl.appendcsv(self.table, file_path)
 
         return self.collection
 
