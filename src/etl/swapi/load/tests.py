@@ -9,7 +9,8 @@ from petl import MemorySource
 
 from data_collections.models import Collection, SWPerson
 from etl.swapi.load.loader import SWAPILoader
-from etl.swapi.mocked_swapi_responses import people_mocked_data, planets_mapping
+from etl.swapi.mocked_swapi_responses import (people_mocked_data,
+                                              planets_mapping)
 from etl.swapi.transform.transform import SWAPITransformTable
 
 

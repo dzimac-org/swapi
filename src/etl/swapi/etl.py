@@ -1,10 +1,11 @@
+from time import time
+from typing import List, Union
+
 from data_collections.models import Collection
 from etl.base_etl import ETL
 from etl.swapi.extract.client import SWAPIClient
 from etl.swapi.load.loader import SWAPILoader
 from etl.swapi.transform.transform import SWAPITransformTable
-from time import time
-from typing import List, Union
 
 
 class SWAPIETL(ETL):

@@ -1,6 +1,8 @@
 from django.urls import path
 
-from data_collections.views import CollectionListView, CollectionPersonsListView, CollectionAggregateView, fetch
+from data_collections.views import (CollectionAggregateView,
+                                    CollectionListView,
+                                    CollectionPersonsListView, fetch)
 
 urlpatterns = [
     path("", CollectionListView.as_view(), name="collections-list"),

@@ -1,8 +1,9 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
-from data_collections.models import Collection
 from freezegun import freeze_time
+
+from data_collections.models import Collection
 
 
 class CollectionModelTests(TestCase):

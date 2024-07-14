@@ -1,4 +1,5 @@
 import petl
+from django.conf import settings
 
 from data_collections.models import Collection, SWPerson
 
@@ -11,7 +12,7 @@ class SWAPILoader:
         self.collection = collection
 
     def create_collection(self):
-        file_name = f"collection_{self.ts}.csv"
+        file_name = f"{settings.MEDIA_ROOT}/collection_{self.ts}.csv"
 
         if self.create:
             petl.tocsv(self.table, file_name)

@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from rest_framework import status
 from freezegun import freeze_time
+from rest_framework import status
+
 from data_collections.models import Collection, SWPerson
 
 basic_sw_person_data = {

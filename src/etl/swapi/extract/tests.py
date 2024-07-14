@@ -3,12 +3,11 @@ from unittest.mock import MagicMock, Mock, patch
 import requests
 from django.test import TestCase
 from rest_framework import status
+
 from etl.swapi.extract.client import SWAPIClient
-from etl.swapi.extract.exceptions import (
-    SWAPIConnectionError,
-    SWAPIResponseDataError,
-    SWAPIResponseStatusError,
-)
+from etl.swapi.extract.exceptions import (SWAPIConnectionError,
+                                          SWAPIResponseDataError,
+                                          SWAPIResponseStatusError)
 from etl.swapi.mocked_swapi_responses import planets_mocked_data
 
 

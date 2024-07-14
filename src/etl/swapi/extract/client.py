@@ -6,11 +6,9 @@ from django.conf import settings
 from requests import Response
 from rest_framework import status
 
-from etl.swapi.extract.exceptions import (
-    SWAPIConnectionError,
-    SWAPIResponseDataError,
-    SWAPIResponseStatusError,
-)
+from etl.swapi.extract.exceptions import (SWAPIConnectionError,
+                                          SWAPIResponseDataError,
+                                          SWAPIResponseStatusError)
 
 
 class APIClient(ABC):
