@@ -1,5 +1,7 @@
-from django.views.generic import TemplateView, ListView
-from data_collections.models import Collection
+from functools import cached_property
+from rest_framework.generics import get_object_or_404
+from django.views.generic import ListView
+from data_collections.models import Collection, SWPerson
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,17 +14,23 @@ class CollectionListView(ListView):
     model = Collection
 
 
-class IndexView(TemplateView):
-    template_name = "index.html"
+class CollectionPersonsListView(ListView):
+    model = SWPerson
+    context_object_name = "persons"
+    template_name = "data_collections/collection_persons.html"
+    paginate_by = 10
+
+    @cached_property
+    def collection(self):
+        return get_object_or_404(Collection, pk=self.kwargs.get("pk"))
+
+    def get_queryset(self):
+        return self.collection.persons.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["collections"] = Collection.objects.all()
+        context["collection_file_name"] = self.collection.file.name
         return context
-
-
-class CollectionDetailView(TemplateView):
-    template_name = "data_collections/collection_detail.html"
 
 
 @api_view(["POST"])

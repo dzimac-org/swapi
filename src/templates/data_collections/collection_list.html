@@ -9,7 +9,7 @@
     </div>
 
     <script>
-        $(document).ready(function () {
+        $().ready(function () {
             $("#fetch-btn").click(function () {
                 $.ajax({
                     url: 'http://localhost:8080/fetch/',
@@ -30,7 +30,8 @@
           <tbody>
           {% for collection in collection_list %}
             <tr>
-              <td><a href="{{ collection.file.name }}">{{ collection.created }}</a></td>
+              <td><a href="{% url 'collections-persons' pk=collection.id %}
+">{{ collection.created }}</a></td>
             </tr>
           {% endfor %}
           </tbody>
