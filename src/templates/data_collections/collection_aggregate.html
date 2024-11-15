@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Collection Aggregate{% endblock title %}
+{% block content %}
+
+<style>
+    .filter-link {
+        background-color: white;
+        color: blue;
+    }
+    .filter-link.active {
+        color: grey;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="btn-group" role="group">
+                <a class="btn btn-primary filter-link" data-filter="name" href="#">Name</a>
+                <a class="btn btn-primary filter-link" data-filter="birth_year" href="#">Birth Year</a>
+                <a class="btn btn-primary filter-link" data-filter="homeworld" href="#">Homeworld</a>
+                <a class="btn btn-primary filter-link" data-filter="height" href="#">Height</a>
+                <a class="btn btn-primary filter-link" data-filter="mass" href="#">Mass</a>
+                <a class="btn btn-primary filter-link" data-filter="hair_color" href="#">Hair Color</a>
+                <a class="btn btn-primary filter-link" data-filter="skin_color" href="#">Skin Color</a>
+                <a class="btn btn-primary filter-link" data-filter="eye_color" href="#">Eye Color</a>
+                <a class="btn btn-primary filter-link" data-filter="gender" href="#">Gender</a>
+                <a class="btn btn-primary filter-link" data-filter="date" href="#">Date</a>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <a href="{{ collection_persons_url }}"  class="btn btn-primary">Back to the list of persons</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                {% for header in persons.0.keys %}
+                    <th>{{ header|title }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for object in persons %}
+            <tr>
+                {% for value in object.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        let currentFilters = new URLSearchParams(window.location.search);
+
+        $(".filter-link").each(function() {
+            let filterKey = $(this).data('filter');
+            if (currentFilters.has(filterKey)) {
+                $(this).addClass('active');
+            } else {
+                $(this).removeClass('active');
+            }
+        });
+
+        $(".filter-link").click(function(e) {
+            e.preventDefault();
+
+            let filterKey = $(this).data('filter');
+            let currentFilters = new URLSearchParams(window.location.search);
+
+            if (currentFilters.has(filterKey)) {
+                currentFilters.delete(filterKey);
+            } else {
+                currentFilters.append(filterKey, "True");
+            }
+
+            let newUrl = window.location.pathname + "?" + currentFilters.toString();
+            window.location.href = newUrl;
+        });
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Collection Detail{% endblock title %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <h2>{{ collection_file_name }}</h2>
+            </div>
+            <div class="col-md-3">
+                <a href="{{ collection_aggregate_url }}"  class="btn btn-primary">Aggregate</a>
+            </div>
+        </div>
+    </div>
+    <div id="persons_table" class="align-left-start">
+        <table class="table table-bordered table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Birth Year</th>
+                <th>Homeworld</th>
+                <th>Height</th>
+                <th>Mass</th>
+                <th>Hair Color</th>
+                <th>Skin Color</th>
+                <th>Eye Color</th>
+                <th>Gender</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in persons %}
+            <tr>
+                <td>{{ person.name }}</td>
+                <td>{{ person.birth_year }}</td>
+                <td>{{ person.homeworld }}</td>
+                <td>{{ person.height }}</td>
+                <td>{{ person.mass }}</td>
+                <td>{{ person.hair_color }}</td>
+                <td>{{ person.skin_color }}</td>
+                <td>{{ person.eye_color }}</td>
+                <td>{{ person.gender }}</td>
+                <td>{{ person.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div class="text-center mt-3">
+        <button id="load-more" class="btn btn-primary" aria-disabled="false">Load more</button>
+    </div>
+
+<script>
+    let page = 2;
+
+function loadMoreData() {
+    $.ajax({
+        url: '?page=' + page,
+        method: 'GET',
+        success: function(data, status) {
+            if (status === "success") {
+                var results = $(data).find('.table tbody').html();
+                if (results) {
+                    $('.table tbody').append(results);
+                    page++;
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            if (status === 404) {
+                $('#load-more').prop('disabled', true);
+            }
+        }
+    });
+}
+
+    $('#load-more').click(function(){
+        loadMoreData();
+    });
+</script>
+{% endblock content %}
